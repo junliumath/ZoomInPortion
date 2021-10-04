@@ -1,0 +1,128 @@
+% !TEX program = pdflatex
+\documentclass[11pt]{article}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\usepackage{tikz}
+\usetikzlibrary{spy}
+\usepackage{pdfpages}
+\usepackage{listings}
+ 
+\input{imZoomConfig.tex}
+
+ 
+
+ % !TEX program = pdflatex
+\begin{document}
+\date{August 23, 2021}
+%%%%%%%%% TITLE
+\title{An introduction to use imZoomConfig.tex}
+\maketitle
+
+\begin{figure}[!ht]
+\centering
+	\subfigure[grid on, connection off, bottom left]{
+	\zoomincludgraphic{0.45\textwidth}{images/edgepreserving_cmp/lady_L0}{0.2}{0.7}{0.3}{0.8}{3}{help_grid_on}{bottom_left}{line_connection_off}{4}{blue}{2}{red} 
+	}
+	\subfigure[grid on, connection off, bottom right]{
+	\zoomincludgraphic{0.45\textwidth}{images/edgepreserving_cmp/lady_L0}{0.3}{0.5}{0.4}{0.7}{2}{help_grid_on}{bottom_right}{line_connection_off}{4}{blue}{2}{red} 
+	}
+	\subfigure[grid on, connection on, up left]{
+	\zoomincludgraphic{0.45\textwidth}{images/block_our}{0.6}{0.3}{0.7}{0.2}{4}{help_grid_on}{up_left}{line_connection_on}{4}{blue}{1}{red} 
+	}
+	\subfigure[grid off, connection off, up right]{
+	\zoomincludgraphic{0.45\textwidth}{images/block_our}{0.6}{0.3}{0.7}{0.2}{4}{help_grid_off}{up_right}{line_connection_off}{4}{blue}{1}{red}  
+	}
+	\caption{Illustration of imZoomConfig.tex}
+	\label{illus}
+\end{figure}
+
+\section{Introduction}
+
+In the literature of image processing, we usually need to display figures with some zoom-in portion for a clearer illustration. To this end, a tool named \texttt{imZoomConfig.tex} is provided. The main function is \texttt{$\backslash$zoomincludgraphic} which has 14 input paramameters. Suppose the inner clip portion is rectangle $\rm\bf{B}1$ and the corresponding zoom-in portion is rectangle $\rm\bf{B}2$. The usage is as follows:
+
+\texttt{$\backslash$zoomincludgraphic\{$\#$1\}\{$\#$2\}\{$\#$3\}\{$\#$4\}\{$\#$5\}\{$\#$6\}\{$\#$7\}\{$\#$8\}\{$\#$9\}}\\ \texttt{\{$\#\#$1\}\{$\#\#$2\}\{$\#\#$3\}\{$\#\#$4\}\{$\#\#$5\}} 
+
+\begin{itemize}
+	\item $\#$1: width of image, such as $0.3\backslash\rm{textwidth}$ or $0.1$ cm
+	\item $\#$2: image name including image location, such as $\rm{images\slash edgepreserving\_cmp\slash lady\_L0}$
+	\item $\#$3: x-coordinate of $\rm\bf{B}1$ (bottom left corner)
+	\item $\#$4: y-coordinate of $\rm\bf{B}1$ (bottom left corner)
+	\item $\#$5: x-coordinate of $\rm\bf{B}1$ (upper-right corner)
+	\item $\#$6: y-coordinate of $\rm\bf{B}1$ (upper-right corner)
+	\item $\#$7: zoom-in ratio, such as 2, it means we will zoom-in 2 times larger of the selected portion
+	\item $\#$8: to show grid or not. It helps to identify the coordinates. Two options: $\rm{help}\_grid\_on$ and $\rm{help}\_grid\_off$ 
+	\item $\#$9: the location of zoom-in portion. It has four options: $\rm{up\_left}$, $\rm{up\_right}$, $\rm{bottom\_left}$, $\rm{bottom\_right}$
+	\item $\#$10: two dashed lines connecting $\rm\bf{B}1$ and $\rm\bf{B}2$. It has two options: $\rm{line\_connection\_on}$ and $\rm{line\_connection\_off}$
+	\item $\#$11: the line width of zoom-in portion $\rm\bf{B}2$, such as 3
+	\item $\#$12: the line color of zoom-in portion $\rm\bf{B}2$, such as blue
+	\item $\#$13: the line width of inner selected portion $\rm\bf{B}1$, such as 3
+	\item $\#$14: the line color of inner selected portion $\rm\bf{B}1$, such as red
+\end{itemize}
+ 
+ \section{Demo}
+The readers can use it similar as $\backslash \rm{includegraphics}$. To use this tool, the reader first need to put the $\texttt{imZoomConfig.tex}$ ahead of $\backslash$begin\{document\} using \texttt{$\backslash$input\{imZoomConfig.tex\}}
+
+The resulting figure is shown in Fig \ref{illus}. A demo is as follows:
+
+
+\begin{lstlisting}
+\documentclass[10pt]{article}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{spy}
+\usepackage{pdfpages}
+\usepackage{listings}
+\end{lstlisting}
+{\textcolor{red}{{$\backslash$input\{imZoomConfig.tex\}}}}
+\begin{lstlisting}
+\begin{document}
+
+ 
+\title{An introduction to use imZoomConfig.tex}
+\maketitle
+
+
+\begin{figure}[!ht]
+\centering
+  \subfigure[]{
+  \zoomincludgraphic{0.45\textwidth}{images/edgepreserving_cmp/lady_L0}
+                    {0.2}{0.7}{0.3}{0.8}{3}{help_grid_on}{bottom_left}
+	            {line_connection_off}{4}{blue}{2}{red} 
+	}
+  \subfigure[]{
+  \zoomincludgraphic{0.45\textwidth}{images/edgepreserving_cmp/lady_L0}
+                    {0.3}{0.5}{0.4}{0.7}{2}{help_grid_on}{bottom_right}
+	            {line_connection_off}{4}{blue}{2}{red} 
+	}
+  \subfigure[]{
+  \zoomincludgraphic{0.45\textwidth}{images/edgepreserving_cmp/lady_L0}
+                    {0.6}{0.3}{0.7}{0.2}{3}{help_grid_on}{up_left}
+	            {line_connection_on}{4}{blue}{2}{red} 
+	}
+  \subfigure[]{
+  \zoomincludgraphic{0.45\textwidth}{images/edgepreserving_cmp/lady_L0}
+                    {0.3}{0.5}{0.4}{0.7}{2}{help_grid_off}{up_right}
+	            {line_connection_off}{4}{blue}{2}{red} 
+	}
+	\caption{testtest}
+\end{figure}
+\end{document}
+\end{lstlisting}
+
+
+ 
+ 
+
+
+ 
+ 
+\end{document}
